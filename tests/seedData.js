@@ -20,6 +20,11 @@ const seedUser = [
 const seedBoard = [
   { type: "French", description: "Selection of French cheeses", rating: 10 },
   { type: "English", description: "Selection of English cheeses", rating: 5 },
+  {
+    type: "International",
+    description: "Selection of French and English cheeses",
+    rating: 8,
+  },
 ];
 
 const seedCheese = [
