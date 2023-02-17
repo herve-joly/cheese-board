@@ -7,4 +7,4 @@ const Cheese = sequelize.define("Cheese", {
   description: DataTypes.STRING,
 });
 
-module.exports = Cheese;
+module.exports = { Cheese };

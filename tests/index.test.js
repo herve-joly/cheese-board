@@ -1,5 +1,8 @@
 const sequelize = require("../src/db/connection");
-const { Board, Cheese, User } = require("../src/models");
+const { User } = require("../src/models/User");
+const { Cheese } = require("../src/models/Cheese");
+const { Board } = require("../src/models/Board");
+const { seedUser } = require("./seedData");
 
 //Setup - Teardown
 beforeAll(async () => {
@@ -20,3 +23,10 @@ afterAll(async () => {
 });
 
 //Test for table creation and data insertion into table
+describe("Testing the tables creation", () => {
+  test("User table creation", async () => {
+    const testUser = await User.create(seedUser[0]);
+    expect(testUser.username).toBe("Jane");
+    expect(testUser.email).toBe("jane.doe@email.com");
+  });
+});

@@ -8,4 +8,4 @@ const Board = sequelize.define("Board", {
   rating: DataTypes.NUMBER,
 });
 
-module.exports = Board;
+module.exports = { Board };
