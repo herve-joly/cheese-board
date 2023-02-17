@@ -76,5 +76,40 @@ describe("Testing for associations", () => {
     expect(boardCheese2[0].title).toBe(boardCheese[1].title);
   });
 
-  test("Eager loading", async () => {});
+  test("Eager loading", async () => {
+    const testUser = await User.create(seedUser[3]);
+    const testBoard = await Board.create(seedBoard[0]);
+    const testBoard2 = await Board.create(seedBoard[1]);
+    const testCheese = await Cheese.create(seedCheese[0]);
+    const testCheese1 = await Cheese.create(seedCheese[1]);
+    const testCheese2 = await Cheese.create(seedCheese[2]);
+    await testBoard.addCheeses([testCheese, testCheese1]);
+    await testBoard2.addCheeses([testCheese1, testCheese2]);
+    await testCheese.addBoards([testBoard]);
+    await testCheese1.addBoards([testBoard, testBoard2]);
+    await testCheese2.addBoards([testBoard2]);
+    await testUser.addBoards([testBoard, testBoard2]);
+
+    //A board can be loaded with its cheeses
+    const boardsWithCheeses = await Board.findAll({
+      include: Cheese,
+    });
+    expect(boardsWithCheeses.length).toBe(2);
+    expect(boardsWithCheeses[0].Cheeses.length).toBe(2);
+    expect(boardsWithCheeses[1].Cheeses.length).toBe(2);
+
+    //A user can be loaded with its boards
+    const userWithBoards = await User.findOne({
+      where: { username: "Garry" },
+      include: Board,
+    });
+    expect(userWithBoards.Boards.length).toBe(2);
+
+    //A cheese can be loaded with its board
+    const cheeseWithBoards = await Cheese.findOne({
+      where: { title: "Brie" },
+      include: Board,
+    });
+    expect(cheeseWithBoards.Boards.length).toBe(2);
+  });
 });
