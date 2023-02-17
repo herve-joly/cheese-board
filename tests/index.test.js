@@ -97,6 +97,7 @@ describe("Testing for associations", () => {
     expect(boardsWithCheeses.length).toBe(2);
     expect(boardsWithCheeses[0].Cheeses.length).toBe(2);
     expect(boardsWithCheeses[1].Cheeses.length).toBe(2);
+    expect(boardsWithCheeses[0].type).toBe("French");
 
     //A user can be loaded with its boards
     const userWithBoards = await User.findOne({
